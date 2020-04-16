@@ -76,25 +76,6 @@ public class Ocho_Reinas {
 		return disp;
 	}
 	
-	public static boolean isDisponible(int[]posicion) {
-        int j=0;
-        
-        for(int t=0;t<posicion.length;t++) {
-            if(posicion[t]!=-1) 
-                j++;
-        }
-        
-        for(int i=0;i<j;i++) {
-            for(int u=i+1;u<j;u++) {
-                if(posicion[i]==posicion[u] || posicion[u]==posicion[i]+(u-i) || posicion[u]==posicion[i]-(u-i)) {
-                    
-                	return false;  
-                }  
-            }   
-        }
-        //System.out.println("is true");
-        return true;
-	}
 	
 	public static int[][] resolver() {
 		int[] arr=new int[8];
@@ -145,59 +126,71 @@ public class Ocho_Reinas {
 		}
 	}*/
 	
-	final static int N = 8;
+	final static int N = 7;
 	final static int n = (N+1);
 	static int [] reinas = new int[n];
-	static boolean solucion; 
+	static boolean solucion=false; 
+	static int[][] nSol=new int[1][8];
 	
 	public static boolean solucionReinas(){
 		solucion = false;
-		ponerReina(1);
+		ponerReina(0);
 		return solucion;
+	}
+	
+	public static boolean solucionIgual() {
+		
+		for (int i = 0; i < nSol.length; i++) {
+			if(Arrays.equals(reinas, nSol[i]))
+				return true;
+		}
+		return false;
 	}
 	
 	private static void ponerReina(int i){
 		int j;
-		j = 0; // inicializa posibles movimientos
+		j = -1; // inicializa posibles movimientos
 		do {
 			j++;
 			reinas[i] = j; // prueba a colocar reina i en fila j,
-								
+							
 			// a la vez queda anotado el movimiento
-			 if (valido(i))
-			 {
-				 if (i < N) // no completado el problema
-				 {
+			 if (valido(i)){
+				 if (i < N){
 					 ponerReina(i+1);
 					 // vuelta atrás
 					 if (!solucion)
 						 reinas[i] = 0;
 				 }
-				 else // todas las reinas colocadas
+				 else { // todas las reinas colocadas
 					 solucion = true;
-			 }
-		} while(!solucion && (j < 8));
+					 add(reinas);
+				 }
+			}
+		} while(!solucion && (j < 7) && !solucionIgual());
+	}
+	
+	public static void add(int[] reinas) {
+		nSol=Arrays.copyOf(nSol, nSol.length+1);
+		
+		nSol[nSol.length-1]=reinas;
 	}
 	
 	private static boolean valido(int i){
 			 /* Inspecciona si la reina de la columna i es atacada por
 					 alguna reina colocada anteriormente */
-		int r;
-		boolean libre;
-		libre = true;
-		for (r = 1; r <= i-1; r++)
-		{
-				 // no esté en la misma fila
-		libre = libre && (reinas[i] != reinas[r]);
-				 // no esté en alguna de las dos diagonales
-				 libre = libre && ((i + reinas[i]) != (r + reinas[r]));
-				 libre = libre && ((i - reinas[i]) != (r - reinas[r]));
-		}
-		return libre;
+		 	int j=0;
+	        for(j=0;j<i;j++) {
+	                if(reinas[i]==reinas[j] || reinas[i]==reinas[j]+(i-j) || reinas[i]==reinas[j]-(i-j)) {  
+	                	return false;  
+	                }  
+	            }   
+	        return true;
+		
 	}
 	
 	public static void main(String[] args) {
-		solucion=solucionReinas();
+		ponerReina(0);
 		printv(reinas);
 	}
 	
