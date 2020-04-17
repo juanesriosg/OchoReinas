@@ -3,7 +3,7 @@ public class Ocho_Reinas {
 	
 	final static int N=8;
 	static int cont=0;
-	private static int [][] tablero=new int[N][N];
+	static int [][] tablero=new int[N][N];
 
 	public static void main(String[] args) {
 		solucionCompleta();	
