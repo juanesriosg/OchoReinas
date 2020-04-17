@@ -1,17 +1,13 @@
 package principal;
-
-import java.util.Arrays;
-import java.util.Random;
-
 public class Ocho_Reinas {
-	public static void main(String[] args) {
-		solucionCompleta();	
-	}
-
+	
 	final static int N=8;//Dimension del tablero
 	static int cont=0;
 	private static int [][] tablero=new int[N][N];
 
+	public static void main(String[] args) {
+		solucionCompleta();	
+	}
 	public static void imprimirTablero(){
 		int[] sln=new int[8];
 		for(int i=0;i<tablero.length;i++){
