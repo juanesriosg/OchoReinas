@@ -12,29 +12,25 @@ public class Ocho_Reinas {
 	}
 	
 	public static void almacenarSoluciones(int cont) {
-		
+		soluciones[cont-1]=solucionVectorial;
 	}
 	
 	public static void solucionVectorial() {
-		
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				if(tablero[i][j] != 0) 
+					solucionVectorial[j]=i+1;
+			}
+		}
 	}
 	
 	public static void imprimirTablero(){
-		int[] sln=new int[8];
-		
-		for(int i=0;i<tablero.length;i++){
-			for (int j=0;j<tablero.length;j++) {
+		for(int i=0;i<N;i++){
+			for (int j=0;j<N;j++) {
 				System.out.print(tablero[i][j]+ "\t");
-				if(tablero[i][j]!=0) {
-					sln[j]=i+1;
-				}
 			}
-			
 			System.out.println();
 		}
-		System.out.println("\t\t\tSolucion vectorial: ");
-		print(sln);
-		System.out.println();
 	}
 	
 	public static void print(int[] arr) {
@@ -55,7 +51,7 @@ public class Ocho_Reinas {
 				if (valida(fila, col)){// Verificar que fila y columna validas
 					tablero[fila][col]=1;
 					ponerReina(col+1);
-					tablero[fila][col]=0;// backtracking
+					tablero[fila][col]=0;// backtracking siempre
 				}
 			}
 			fila++;// nueva fila
