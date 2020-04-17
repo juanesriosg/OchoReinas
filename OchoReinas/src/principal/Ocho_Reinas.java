@@ -4,161 +4,29 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Ocho_Reinas {
-	static boolean solucion=false; 
-	static int[][] nSol=new int[0][8];
-
-	
-	public static boolean solucionIgual(int[] reinas) {
-		
-		for (int i = 0; i < nSol.length; i++) {
-			if(Arrays.equals(reinas, nSol[i]))
-				return false;
-		}
-		return true;
-	}
-	
-	private static void ponerReina(int[] reinas,int i,int inicio){
-		 // inicializa posibles movimientos
-		int j=0;
-		int control=inicio;
-			do {
-				j++;
-				reinas[i] = j; // prueba a colocar reina i en fila j
-				 if (valido(reinas,i)){
-					 if (i < 7){
-						 ponerReina(reinas,i+1,inicio);
-						 if (!solucion)
-							 reinas[i] = 0;
-					 }
-					 else { // todas las reinas colocadas
-						 print(reinas);
-
-						 if(reinas[0]==0) {
-							 System.out.println("Entra a complementar de: "+0 +" hasta: "+(control-1));
-							 ponerReinaC(reinas, 0,control-1);
-							 
-						 }
-						 else {
-							 solucion=true;
-							 
-							 if(solucionIgual(reinas)) {
-								 
-								 add(reinas);
-								 System.out.println("es solucion:");
-
-							 }else {
-								 System.out.println("es Solucion igual: ");
-								 
-							 }
-							 
-							 print(reinas);
-						 }
-						 
-						 
-					 }
-				}
-			} while(!solucion && (j < 8));
-			
-			
-			
-			
-	}
-	
-	public static void ponerReinaC(int[] reinas, int i,int fin) {
-		int j=0;
-		
-		do {
-			j++;
-			reinas[fin] = j; // prueba a colocar reina fin en fila j
-			 if (validoComp(reinas,fin) ){
-				 if (fin >i ){
-					 ponerReinaC(reinas,i,fin-1);
-					 if (!solucion)
-						 reinas[fin] = 0;
-				 }
-				 else { // todas las reinas colocadas
-					 
-					if(solucionIgual(reinas)) {
-						 
-						 add(reinas);
-						 System.out.println("es solucion comp:");	
-					 }else {
-						 System.out.println("es Solucion igual comp: "); 
-					 }
-					 solucion = true;
-					 print(reinas);
-				 }
-			}
-		} while(!solucion && (j < 8) );
-	}
-	
-	
-	
-	public static void solucionarNreinas(int n) {
-		int[] solucionesXinicial= {4,8,16,18,18,16,8,4};
-		int i=0;
-		while(i<8 && solucionesXinicial[i]>0){
-			System.out.println("solucion para col: "+(i+1));
-			
-			solucionesXinicial[i]--;
-			//solucionesXinicial[i]-=solucionesXinicial[i];
-			
-			int j=i;
-			int[] reinas=new int[8];
-			solucion=false;
-			ponerReina(reinas, j,j);
-			
-			
-			if(solucionesXinicial[i]==0) {
-				i++;
-				System.out.println("\n");
-			}
-			
-			
-		}
-		System.out.println("=========================\n\n");
-		print(nSol);
-		 
-		
-	}
-	
-	
-	public static void add(int[] reinas) {
-		nSol=Arrays.copyOf(nSol, nSol.length+1);
-		
-		nSol[nSol.length-1]=reinas;
-	}
-	private static boolean validoComp(int[] reinas,int i){
-		 /* Inspecciona si la reina de la columna i es atacada por
-				 alguna reina colocada posterior */
-	 	int j;
-       for(j=7;j>i;j--) {
-               if(reinas[i]==reinas[j] || reinas[i]==reinas[j]+(j-i) || reinas[i]==reinas[j]-(j-i))
-               		return false;     
-           }   
-       return true;
-	
-}
-	
-	
-	private static boolean valido(int[] reinas,int i){
-			 /* Inspecciona si la reina de la columna i es atacada por
-					 alguna reina colocada anteriormente */
-		 	int j=0;
-	        for(j=0;j<i;j++) {
-	                if(reinas[i]==reinas[j] || reinas[i]==reinas[j]+(i-j) || reinas[i]==reinas[j]-(i-j)) {  
-	                	return false;  
-	                }  
-	            }   
-	        return true;
-		
-	}
-	
 	public static void main(String[] args) {
-		int[] reinas=new int[8];
-		//ponerReina(reinas,0);
-		solucionarNreinas(92);
-		//print(nSol);
+		solucionCompleta();	
+	}
+
+	final static int N=8;//Dimension del tablero
+	static int cont=0;
+	private static int [][] tablero=new int[N][N];
+
+	public static void imprimirTablero(){
+		int[] sln=new int[8];
+		for(int i=0;i<tablero.length;i++){
+			for (int j=0;j<tablero.length;j++) {
+				System.out.print(tablero[i][j]+ "\t");
+				if(tablero[i][j]!=0) {
+					sln[j]=i+1;
+				}
+			}
+			
+			System.out.println();
+		}
+		System.out.println("solucion vectorial: ");
+		print(sln);
+		System.out.println();
 	}
 	
 	public static void print(int[] arr) {
@@ -167,134 +35,50 @@ public class Ocho_Reinas {
 		}
 		System.out.println();
 	}
-	
-	public static void print(int[][] arr) {
-		for(int i=0;i<arr.length;i++) {
-			System.out.print("Solucion "+(i+1)+" :\t");
-			print(arr[i]);
-			System.out.println();
-			
-		}
+
+	public static void solucionCompleta(){
+		ponerReina(0);
 	}
 	
-	/*public static void main(String[] args) {
-		print(resolver());
-	}
-	
-	public static int[] ponerReina(int[][] sln,int[] arr,int col,int i) {
-		int[] disp=disponibles(arr);
-		System.out.print("disp: col:"+col+"\t");
-		printv(disp);
-		while(col<=7) {	
-			if(i<disp.length) {
-				arr[col]=disp[i];
-				System.out.print("col: "+col+" :\t");
-				printv(arr);
-				
-				return ponerReina(sln,arr,col+1,i);
-			}else if(i==disp.length) {
-				System.out.println("BackT en col: "+col+" : ");
-				arr[col-1]=-1;
-				System.out.print("col desde bt: "+col+" :\t");
-				printv(arr);
-				return ponerReina(sln,arr, col-1,i+1);
-			}
-			
-			
-			
-			
-		}
-		if(isSolucion(sln, arr))
-			return arr;
-		else {
-			return ponerReina(sln,arr,0,i+1);
-		}
-	}
-	
-	public static int[] disponibles(int[] arr) {
-		
-		int j=0;
-		for(int t=0;t<arr.length;t++) {
-            if(arr[t]!=-1) 
-                j++;
-		}
-		
-		int[] aux=Arrays.copyOf(arr, j+1);
-		
-		
-		String a="";
-		int k=0;
-		for (int i = 0; i <=7; i++) {
-			aux[aux.length-1]=i;
-			
-			if(isDisponible(aux)) {
-				k++;
-				a+=i;
-			}
-		}
-		
-		String[] arrAuxStr=a.split("");
-		int[] disp=new int[k];
-		
-		if(!a.isEmpty()) {
-			for (int i = 0; i < disp.length; i++) {
-				disp[i]=Integer.parseInt(arrAuxStr[i]);
-			}
-		}
-		
-		return disp;
-	}
-	
-	
-	public static int[][] resolver() {
-		int[] arr=new int[8];
-		
-		int[][] sln=new int[92][8];
-		for (int i = 0; i < arr.length; i++) {
-			arr=llenarArr(arr);
-			sln[i]= ponerReina(sln,arr,0,0);
-			
-		}
-		return sln;
-	}
-	
-	public static int[] llenarArr(int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			arr[i]=-1;
-		}
-		return arr;
-	}
-	
-	public static boolean isSolucion(int[][] arr, int[] eval) {
-		int cont=0;
-		for (int i = 0; i < arr.length; i++) {
-			for (int j = 0; j < arr[0].length; j++) {
-				if(arr[i][j]==eval[j]) {
-					cont++;
+	public static void ponerReina(int col){
+		int fila= 0; // cantidad de posiciones posibles (8 filas como máximo)
+		while (fila<N){
+			if (col<N){
+				if (valida(fila, col)){// Verificar que fila y columna validas
+					tablero[fila][col]=1;
+					ponerReina(col+1);
+					tablero[fila][col]=0;// regreso atrás siempre
 				}
 			}
+			fila++;// nueva fila
 		}
-		return cont==8?false:true;
-	}
-	
-	public static void printv(int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i]+"\t");
-		}
-		System.out.println();
-	}
-	
-	public static void print(int[][] arr) {
-		for(int i=0;i<10;i++) {
-			System.out.print("Solucion "+(i+1)+" :\t");
-			for (int j = 0; j < arr[i].length; j++) {
-				System.out.print(arr[i][j]+"\t");
-			}
+		if (col>=N){
+			cont++;
+			System.out.println("Solucion: "+cont);
+			imprimirTablero();
 			System.out.println();
-			
 		}
-	}*/
+	}
+
+	// Verifica si una posición es válida
+	public static boolean rango(int num){
+		return (num>=0 && num<N);
+	}
 	
-	
-	
-}
+	private static boolean valida(int fila,int col){
+		//int j=0;
+		for (int j = 0; j <= col; j++) {
+			//Verifico que no ocupada la fila
+			if(tablero[fila][j] !=0 && j!=col)
+				return false; 
+			//Verifico diagonal superior
+			if((rango (fila-j)&&rango(col-j) && tablero[fila-j][col-j] != 0 && j>0 ))
+				return false;
+			//Verifico diagonal inferior
+			if(rango (fila+j)&& rango(col-j) &&tablero[fila+j][col-j] != 0 && j>0)
+				return false;	
+		}
+		
+		return true;	
+	}
+}	
