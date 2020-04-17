@@ -1,7 +1,7 @@
 package principal;
 public class Ocho_Reinas {
 	
-	final static int N=8;//Dimension del tablero
+	final static int N=8;
 	static int cont=0;
 	private static int [][] tablero=new int[N][N];
 
@@ -37,13 +37,13 @@ public class Ocho_Reinas {
 	}
 	
 	public static void ponerReina(int col){
-		int fila= 0; // cantidad de posiciones posibles (8 filas como máximo)
+		int fila= 0; // maximo 8 filas disponibles
 		while (fila<N){
 			if (col<N){
 				if (valida(fila, col)){// Verificar que fila y columna validas
 					tablero[fila][col]=1;
 					ponerReina(col+1);
-					tablero[fila][col]=0;// regreso atrás siempre
+					tablero[fila][col]=0;// backtracking
 				}
 			}
 			fila++;// nueva fila
@@ -62,13 +62,12 @@ public class Ocho_Reinas {
 	}
 	
 	private static boolean valida(int fila,int col){
-		//int j=0;
 		for (int j = 0; j <= col; j++) {
 			//Verifico que no ocupada la fila
 			if(tablero[fila][j] !=0 && j!=col)
 				return false; 
 			//Verifico diagonal superior
-			if((rango (fila-j)&&rango(col-j) && tablero[fila-j][col-j] != 0 && j>0 ))
+			if(rango (fila-j)&&rango(col-j) && tablero[fila-j][col-j] != 0 && j>0 )
 				return false;
 			//Verifico diagonal inferior
 			if(rango (fila+j)&& rango(col-j) &&tablero[fila+j][col-j] != 0 && j>0)
