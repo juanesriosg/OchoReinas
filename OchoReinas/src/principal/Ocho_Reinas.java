@@ -27,8 +27,9 @@ public class Ocho_Reinas {
 	public static void imprimirTablero(){
 		for(int i=0;i<N;i++){
 			for (int j=0;j<N;j++) {
-				System.out.print(tablero[i][j]+ "\t");
+				System.out.print(tablero[i][j]!=0?"🔱\t":tablero[i][j]+ "\t");
 			}
+			 
 			System.out.println();
 		}
 	}
@@ -44,20 +45,22 @@ public class Ocho_Reinas {
 		ponerReina(0);
 	}
 	
+	
+	
 	public static void ponerReina(int col){
 		int fila= 0; // maximo 8 filas disponibles
 		while(fila<N){
 			if(col<N){
 				if (valida(fila, col)){// Verificar que fila y columna validas
 					tablero[fila][col]=1;
-					ponerReina(col+1);
-					tablero[fila][col]=0;// backtracking siempre
+					ponerReina(col+1); //se pone siguiente reina
+					tablero[fila][col]=0; //backtracking
 				}
 			}
-			fila++;// nueva fila
+			fila++;//Intento en otra fila
 		}
 		if (col>=N){
-			System.out.println("\t\t\tSolucion: "+(++cont));
+			System.out.println("\t\t       Solucion:"+(++cont));
 			imprimirTablero();
 			System.out.println();
 			solucionVectorial();
@@ -67,7 +70,7 @@ public class Ocho_Reinas {
 
 	private static boolean valida(int fila,int col){
 		for (int j = 0; j <= col; j++) {
-			//Verifico que no ocupada la fila
+			//Verifico que no este ocupada la fila
 			if(tablero[fila][j] !=0 && j!=col)
 				return false; 
 			//Verifico diagonal superior
