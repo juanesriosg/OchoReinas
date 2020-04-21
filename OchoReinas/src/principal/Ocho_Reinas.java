@@ -8,7 +8,20 @@ public class Ocho_Reinas {
 	static int[] solucionVectorial=new int[8];
 	
 	public static void main(String[] args) {
-		solucionCompleta();	
+		solucionCompleta();
+		
+		imprimir();
+	}
+	
+	private static void imprimir() {
+		for(int i=0;i<N;i++){
+			for (int j=0;j<N;j++) {
+				System.out.print(soluciones[i][j]+ "\t");
+			}
+			 
+			System.out.println();
+		}
+
 	}
 	
 	public static void almacenarSoluciones(int cont) {
@@ -48,8 +61,10 @@ public class Ocho_Reinas {
 	
 	
 	public static void ponerReina(int col){
-		int fila= 0; // maximo 8 filas disponibles
-		while(fila<N){
+		//Inicializa fila para comprobar cada valor si es valido
+		//Menor que N para que no sobrepase la matriz
+		//Se le suma 1 para intentar poner la reina en otra fila
+		for (int fila= 0; fila<N; fila++) { 
 			if(col<N){
 				if (valida(fila, col)){// Verificar que fila y columna validas
 					tablero[fila][col]=1;
@@ -57,7 +72,6 @@ public class Ocho_Reinas {
 					tablero[fila][col]=0; //backtracking
 				}
 			}
-			fila++;//Intento en otra fila
 		}
 		if (col>=N){
 			System.out.println("\t\t       Solucion:"+(++cont));
@@ -65,6 +79,7 @@ public class Ocho_Reinas {
 			System.out.println();
 			solucionVectorial();
 			almacenarSoluciones(cont);
+			
 		}
 	}
 
