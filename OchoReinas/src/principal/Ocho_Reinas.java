@@ -5,39 +5,35 @@ public class Ocho_Reinas {
 	static int cont=0;
 	static int [][] tablero=new int[N][N];
 	static int [][] soluciones=new int[92][N];
-	static int[] solucionVectorial=new int[8];
 	
 	public static void main(String[] args) {
 		solucionCompleta();
-		
-		imprimir();
 	}
 	
 	private static void imprimir() {
-		for(int i=0;i<N;i++){
-			for (int j=0;j<N;j++) {
-				System.out.print(soluciones[i][j]+ "\t");
-			}
-			 
-			System.out.println();
+		for(int i=0;i<soluciones.length;i++){
+			print(soluciones[i]);
 		}
 
 	}
 	
 	public static void almacenarSoluciones(int cont) {
-		soluciones[cont-1]=solucionVectorial;
+		soluciones[cont-1]=solucionVectorial();
 	}
 	
-	public static void solucionVectorial() {
+	public static int[] solucionVectorial() {
+		int[] sv=new int[8];
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				if(tablero[i][j] != 0) 
-					solucionVectorial[j]=i+1;
+					sv[j]=i+1;
 			}
 		}
+		return sv;
 	}
 	
 	public static void imprimirTablero(){
+		System.out.println("\t\t       Solucion:"+(++cont));
 		for(int i=0;i<N;i++){
 			for (int j=0;j<N;j++) {
 				System.out.print(tablero[i][j]!=0?"🔱\t":tablero[i][j]+ "\t");
@@ -45,6 +41,7 @@ public class Ocho_Reinas {
 			 
 			System.out.println();
 		}
+		System.out.println();
 	}
 	
 	public static void print(int[] arr) {
@@ -60,24 +57,20 @@ public class Ocho_Reinas {
 	
 	
 	
-	public static void ponerReina(int col){
+	public static void ponerReina(int columna){
 		//Inicializa fila para comprobar cada valor si es valido
-		//Menor que N para que no sobrepase la matriz
-		//Se le suma 1 para intentar poner la reina en otra fila
+		//Menor que N para que no sobrepase el tamaño de la matriz
+		//Se le suma 1 para intentar poner la reina en la siguiente fila
 		for (int fila= 0; fila<N; fila++) { 
-			if(col<N){
-				if (valida(fila, col)){// Verificar que fila y columna validas
-					tablero[fila][col]=1;
-					ponerReina(col+1); //se pone siguiente reina
-					tablero[fila][col]=0; //backtracking
+			// Verificar columna <8 y que fila y columna validas
+				if (columna<N && valida(fila, columna)){
+					tablero[fila][columna]=1;
+					ponerReina(columna+1); //se intenta poner siguiente reina
+					tablero[fila][columna]=0; //si no consigue poner la otra reina hace backtracking
 				}
-			}
 		}
-		if (col>=N){
-			System.out.println("\t\t       Solucion:"+(++cont));
+		if (columna>=N){
 			imprimirTablero();
-			System.out.println();
-			solucionVectorial();
 			almacenarSoluciones(cont);
 			
 		}
