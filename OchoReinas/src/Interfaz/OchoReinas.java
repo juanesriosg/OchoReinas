@@ -1,4 +1,7 @@
 package Interfaz;
+
+import java.util.Arrays;
+
 public class OchoReinas {
 	
 	final static int N=8;
@@ -6,16 +9,9 @@ public class OchoReinas {
 	static int [][] tablero=new int[N][N];
 	static int [][] soluciones=new int[92][N];
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		solucionCompleta();
-		//imprimir();
-	}
-	
-	private static void imprimir() {
-		for(int i=0;i<soluciones.length;i++){
-			print(soluciones[i]);
-		}
-	}
+	}*/
 	
 	public static void almacenarSoluciones(int cont) {
 		soluciones[cont-1]=solucionVectorial();
@@ -40,13 +36,6 @@ public class OchoReinas {
 			}
 			 
 			System.out.println();
-		}
-		System.out.println();
-	}
-	
-	public static void print(int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i]+"\t");
 		}
 		System.out.println();
 	}
@@ -75,7 +64,7 @@ public class OchoReinas {
 			
 		}
 	}
-
+	
 	private static boolean valida(int fila,int col){
 		for (int j = 0; j <= col; j++) {
 			//Verifico que no este ocupada la fila
@@ -91,37 +80,9 @@ public class OchoReinas {
 		return true;	
 	}
 	
-	public static int [][] elegirSolucion(int n) {
-		int [] temp = new int[8];
-		int [][] soluciontemp = new int [8][8];
-		for(int i=0; i < soluciones.length; i++) {
-			for (int j=0; j <  soluciones[i].length; j++) {
-				 temp[j]=  soluciones[n-1][j];
-			 }
-			for (int k=0; k < soluciontemp.length; k++) {
-				  for (int l=0; l < soluciontemp[k].length; l++) {
-				   if(temp[k]==l+1) {
-					   soluciontemp[l][k]=1;
-				   }
-				   else {
-					   soluciontemp[l][k]=0;
-				   }
-				  }
-				}
-		}
-		return soluciontemp;
-	}		
-	
-	
-
 	public static int[][] getSoluciones() {
 		return soluciones;
-	}
-
-	public static void setSoluciones(int[][] soluciones) {
-		OchoReinas.soluciones = soluciones;
-	}
-	
+	}	
 	
 	
 }	

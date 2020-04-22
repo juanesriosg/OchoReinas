@@ -22,12 +22,8 @@ public class InterfazReinas extends JFrame {
 	private JPanel contentPane;
 	private static JTable table;
 	final static int N=8;
-	static int cont=0;
-	static int [][] tablero=new int[N][N];
-	static int [][] soluciones=new int[92][N];
 	private static JTextField textField;
 	static int n=1;
-	
 	private static OchoReinas reina=new OchoReinas();
 
 	/**
@@ -39,7 +35,7 @@ public class InterfazReinas extends JFrame {
 				try {
 					InterfazReinas f=new InterfazReinas();
 					reina.solucionCompleta();
-					mostrarMatriz(OchoReinas.elegirSolucion(n),n);
+					mostrarMatriz(reina.getSoluciones()[n-1],n);
 					f.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,8 +48,7 @@ public class InterfazReinas extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazReinas() {
-		
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 395, 453);
 		contentPane = new JPanel();
@@ -99,7 +94,7 @@ public class InterfazReinas extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					n++;
-					mostrarMatriz(reina.elegirSolucion(n),n);
+					mostrarMatriz(reina.getSoluciones()[n-1],n);
 				}
 				catch(Exception e1) {
 					JOptionPane.showMessageDialog(rootPane, "No hay más soluciones.");
@@ -109,12 +104,12 @@ public class InterfazReinas extends JFrame {
 		btnSiguiente.setBounds(247, 375, 97, 25);
 		contentPane.add(btnSiguiente);
 		
-		JButton btnAtras = new JButton("Atr\u00E1s");
+		JButton btnAtras = new JButton("Atrás");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					n--;
-					mostrarMatriz(reina.elegirSolucion(n),n);
+					mostrarMatriz(reina.getSoluciones()[n-1],n);
 				}
 				catch(Exception e1){
 					JOptionPane.showMessageDialog(rootPane, "No se puede regresar.");
@@ -134,13 +129,15 @@ public class InterfazReinas extends JFrame {
 	}
 	
 	
-	public static void mostrarMatriz(int matriz [][],int cont) {		
-		for (int i=0; i < 8; i++) {
-			for (int j=0; j<8; j++) {			
-				table.setValueAt((matriz[i][j]!=0?"\u265B":""+ "\t"), i, j);
-				textField.setText("Solución: "+cont);			
-			}
+	public static void mostrarMatriz(int sln [],int cont) {	
+		
+		for (int i=0; i < N; i++) {
+			for (int j = 0; j < N; j++)
+				table.setValueAt((""+ "\t"), j, i);	
+			table.setValueAt(("\u265B"+ "\t"), sln[i]-1, i);	
 		}
+						
+		textField.setText("Solución: "+cont);
 	}
 	
 	
