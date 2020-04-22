@@ -1,5 +1,5 @@
-package principal;
-public class Ocho_Reinas {
+package Interfaz;
+public class OchoReinas {
 	
 	final static int N=8;
 	static int cont=0;
@@ -8,14 +8,13 @@ public class Ocho_Reinas {
 	
 	public static void main(String[] args) {
 		solucionCompleta();
-		imprimir();
+		//imprimir();
 	}
 	
 	private static void imprimir() {
 		for(int i=0;i<soluciones.length;i++){
 			print(soluciones[i]);
 		}
-
 	}
 	
 	public static void almacenarSoluciones(int cont) {
@@ -60,7 +59,7 @@ public class Ocho_Reinas {
 	
 	public static void ponerReina(int columna){
 		//Inicializa fila para comprobar cada valor si es valido
-		//Menor que N para que no sobrepase el tamaño de la matriz
+		//Menor que N para que no sobrepase el tamaï¿½o de la matriz
 		//Se le suma 1 para intentar poner la reina en la siguiente fila
 		for (int fila= 0; fila<N; fila++) { 
 			// Verificar columna <8 y que fila y columna validas
@@ -91,4 +90,38 @@ public class Ocho_Reinas {
 		}
 		return true;	
 	}
+	
+	public static int [][] elegirSolucion(int n) {
+		int [] temp = new int[8];
+		int [][] soluciontemp = new int [8][8];
+		for(int i=0; i < soluciones.length; i++) {
+			for (int j=0; j <  soluciones[i].length; j++) {
+				 temp[j]=  soluciones[n-1][j];
+			 }
+			for (int k=0; k < soluciontemp.length; k++) {
+				  for (int l=0; l < soluciontemp[k].length; l++) {
+				   if(temp[k]==l+1) {
+					   soluciontemp[l][k]=1;
+				   }
+				   else {
+					   soluciontemp[l][k]=0;
+				   }
+				  }
+				}
+		}
+		return soluciontemp;
+	}		
+	
+	
+
+	public static int[][] getSoluciones() {
+		return soluciones;
+	}
+
+	public static void setSoluciones(int[][] soluciones) {
+		OchoReinas.soluciones = soluciones;
+	}
+	
+	
+	
 }	
