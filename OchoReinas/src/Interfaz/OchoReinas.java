@@ -82,7 +82,22 @@ public class OchoReinas {
 	
 	public static int[][] getSoluciones() {
 		return soluciones;
-	}	
+	}
+			
+	public static void estadisticas(int posicion , int num) {
+			int cont =0;
+			for(int j=0; j<soluciones[0].length; j++){
+				for (int i=0; i<soluciones.length; i++){
+					if((j==(posicion-1))&& (soluciones[i][j]==num)){
+					System.out.println(soluciones[i][j]);
+						cont ++;
+					}else {
+						i=92;
+					}
+				}
+			}
+			System.out.println("En la posición"+ posicion + " hay: "+ cont);
+		}
 	
 	
 }	
