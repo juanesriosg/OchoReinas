@@ -128,15 +128,12 @@ public class InterfazReinas extends JFrame {
 		textField.setEditable(false);
 	}
 	
-	
 	public static void mostrarMatriz(int sln [],int cont) {	
-		
 		for (int i=0; i < N; i++) {
 			for (int j = 0; j < N; j++)
 				table.setValueAt((""+ "\t"), j, i);	
 			table.setValueAt(("\u265B"+ "\t"), sln[i]-1, i);	
-		}
-						
+		}				
 		textField.setText("Solución: "+cont);
 	}
 	

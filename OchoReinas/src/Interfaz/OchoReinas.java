@@ -29,10 +29,10 @@ public class OchoReinas {
 	}
 	
 	public static void imprimirTablero(){
-		System.out.println("\t\t       Solucion:"+(++cont));
+		System.out.println("\t\t       Solución:"+(++cont));
 		for(int i=0;i<N;i++){
 			for (int j=0;j<N;j++) {
-				System.out.print(tablero[i][j]!=0?"\u2655\t":tablero[i][j]+ "\t");
+				System.out.print(tablero[i][j]!=0?"\u265B\t":"0"+ "\t");
 			}
 			 
 			System.out.println();
@@ -48,7 +48,7 @@ public class OchoReinas {
 	
 	public static void ponerReina(int columna){
 		//Inicializa fila para comprobar cada valor si es valido
-		//Menor que N para que no sobrepase el tama�o de la matriz
+		//Menor que N para que no sobrepase el tamaño de la matriz
 		//Se le suma 1 para intentar poner la reina en la siguiente fila
 		for (int fila= 0; fila<N; fila++) { 
 			// Verificar columna <8 y que fila y columna validas
@@ -84,5 +84,20 @@ public class OchoReinas {
 		return soluciones;
 	}	
 	
+	public static void estadisticas(int posicion , int num) {
+		int cont =0;
+		for(int j=0; j<soluciones[0].length; j++){
+			for (int i=0; i<soluciones.length; i++){
+				if((j==(posicion-1))&& (soluciones[i][j]==num)){
+				System.out.println(soluciones[i][j]);
+					cont ++;
+				}else {
+					i=92;
+				}
+			}
+		}
+		System.out.println("En la posición"+ posicion + " hay: "+ cont);
+	}
+
 	
 }	
