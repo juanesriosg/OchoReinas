@@ -79,7 +79,7 @@ public class OchoReinas {
 						cont ++;
 					}	
 			}
-			JOptionPane.showMessageDialog(null, "En la columna "+ col +", fila "+fila+ " hay: "+ cont+" reinas");
+			System.out.println("En la columna "+ col +", fila "+fila+ " hay: "+ cont+" reinas");
 	}
 	
 	
