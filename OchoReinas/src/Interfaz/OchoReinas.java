@@ -13,7 +13,7 @@ public class OchoReinas {
 	
 	public static void main(String[] args) {
 		solucionCompleta();
-		estadisticas(8, 8);
+		//estadisticas(8, 8);
 	}
 	
 	public static void almacenarSoluciones(int cont) {
